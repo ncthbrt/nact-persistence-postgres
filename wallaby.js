@@ -1,7 +1,7 @@
 module.exports = () => {
   return {
     files: [
-      'lib/**/*.js',      
+      'lib/**/*.js'
     ],
     tests: [
       'test/**/*.js'
