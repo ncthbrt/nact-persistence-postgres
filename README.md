@@ -1,3 +1,5 @@
+![NAct Logo](https://raw.githubusercontent.com/ncthbrt/nact/master/assets/logo.svg?sanitize=true)
+
 # NAct Postgres
 A postgres persistance plugin for NAct.
 
