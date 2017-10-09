@@ -1,0 +1,1 @@
+docker run -p 127.0.0.1:5431:5432  --rm --name postgres -e POSTGRES_PASSWORD=testpassword -d "postgres -c \"CREATE SCHEMA IF NOT EXISTS test;\" test"
