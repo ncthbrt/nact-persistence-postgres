@@ -1675,6 +1675,10 @@ lru-cache@^4.0.1:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
+manakin@~0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/manakin/-/manakin-0.5.1.tgz#c4a7116f6b00df3d5f1a37ad3ca515d22065a658"
+
 md5-hex@^1.2.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/md5-hex/-/md5-hex-1.3.0.tgz#d2c4afe983c4370662179b8cad145219135046c4"
@@ -1780,9 +1784,9 @@ mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
-nact@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/nact/-/nact-2.0.0.tgz#ab1273e312a73652d45f96c0a4d48de242cba5a1"
+nact@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/nact/-/nact-2.0.1.tgz#c78631448c7a1aeed2f24184908059e59a78f3e9"
   dependencies:
     bluebird "^3.5.0"
     deep-freeze-node "^1.1.3"
@@ -2020,9 +2024,22 @@ pg-cursor@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/pg-cursor/-/pg-cursor-1.3.0.tgz#b220f1908976b7b40daa373c7ada5fca823ab0d9"
 
+pg-minify@~0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/pg-minify/-/pg-minify-0.5.3.tgz#aa09befa3cbe29fab6461bf819100e0471215011"
+
 pg-pool@~2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-2.0.3.tgz#c022032c8949f312a4f91fb6409ce04076be3257"
+
+pg-promise@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/pg-promise/-/pg-promise-7.0.0.tgz#99f1aa880eb19fd4ee1fe66c6f4ca199bc780f78"
+  dependencies:
+    manakin "~0.5.1"
+    pg "~7.3.0"
+    pg-minify "~0.5.3"
+    spex "~2.0.0"
 
 pg-query-stream@^1.1.1:
   version "1.1.1"
@@ -2048,7 +2065,7 @@ pg-types@~1.12.1:
     postgres-date "~1.0.0"
     postgres-interval "^1.1.0"
 
-pg@^7.3.0:
+pg@^7.3.0, pg@~7.3.0:
   version "7.3.0"
   resolved "https://registry.yarnpkg.com/pg/-/pg-7.3.0.tgz#275e27466e54a645f6b4a16f6acadf6b849ad83b"
   dependencies:
@@ -2486,6 +2503,10 @@ spdx-expression-parse@~1.0.0:
 spdx-license-ids@^1.0.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-1.2.2.tgz#c9df7a3424594ade6bd11900d596696dc06bac57"
+
+spex@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/spex/-/spex-2.0.0.tgz#63e1b8655159a32028eb6a237ffb0589e85f3c32"
 
 split@^1.0.0:
   version "1.0.1"

@@ -13,7 +13,7 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/ncthbrt/nact"
-  },  
+  },
   "keywords": [
     "actors",
     "actor-model",
@@ -28,7 +28,7 @@
     "url": "http://github.com/ncthbrt/nact/issues"
   },
   "dependencies": {
-    "nact": "^2.0.0",
+    "nact": "^2.0.1",
     "pg-reactive": "^0.3.2",
     "rxjs": "^5.4.3"
   },
@@ -40,6 +40,7 @@
     "husky": "^0.14.3",
     "mocha": "^4.0.0",
     "nyc": "^11.2.1",
+    "pg-promise": "^7.0.0",
     "semistandard": "^11.0.0"
   }
 }
