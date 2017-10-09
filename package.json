@@ -1,7 +1,7 @@
 {
-  "name": "nact",
-  "version": "2.0.0",
-  "description": "Mulithreaded implementation of the actor model for node",
+  "name": "nact-persistence-postgres",
+  "version": "2.0.1",
+  "description": "PostgreSQL Persistence provider for NAct",
   "main": "lib/index.js",
   "scripts": {
     "test": "yarn run lint && nyc mocha ./test/*.js",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ncthbrt/nact"
+    "url": "git://github.com/ncthbrt/nact-persistence-postgres"
   },
   "keywords": [
     "actors",
@@ -25,7 +25,7 @@
   "author": "Nick Cuthbert (https://github.com/ncthbrt)",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "http://github.com/ncthbrt/nact/issues"
+    "url": "http://github.com/ncthbrt/nact-persistence-postgres/issues"
   },
   "dependencies": {
     "nact": "^2.0.1",
