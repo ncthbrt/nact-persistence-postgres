@@ -28,7 +28,7 @@
     "url": "http://github.com/ncthbrt/nact-persistence-postgres/issues"
   },
   "dependencies": {
-    "nact": "^2.0.1",
+    "nact": "^2.0.2",
     "pg-reactive": "^0.3.2",
     "rxjs": "^5.4.3"
   },
