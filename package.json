@@ -1,6 +1,6 @@
 {
   "name": "nact-persistence-postgres",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "PostgreSQL Persistence provider for NAct",
   "main": "lib/index.js",
   "scripts": {
