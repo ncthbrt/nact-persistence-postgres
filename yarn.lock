@@ -1780,9 +1780,9 @@ mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
-nact@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/nact/-/nact-2.1.0.tgz#2dff2a7a5746618e1b594a75cc9a7c9182210d0d"
+nact@~3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/nact/-/nact-3.0.0.tgz#de06c0f2e419008a783c32e58f681ed599719151"
   dependencies:
     bluebird "^3.5.0"
     deep-freeze-node "^1.1.3"
