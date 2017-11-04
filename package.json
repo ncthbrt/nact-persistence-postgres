@@ -1,7 +1,7 @@
 {
   "name": "nact-persistence-postgres",
-  "version": "3.1.0",
-  "description": "PostgreSQL Persistence provider for NAct",
+  "version": "3.1.4",
+  "description": "nact-persistence-postgres ⇒ nact + postresql = your services have never been so persistent",
   "main": "lib/index.js",
   "scripts": {
     "test": "yarn run lint && nyc mocha ./test/*.js",
@@ -15,12 +15,16 @@
     "url": "git://github.com/ncthbrt/nact-persistence-postgres"
   },
   "keywords": [
+    "PostgreSQL",
+    "persistence",    
+    "event sourcing", 
     "actors",
-    "actor-model",
-    "distributed-systems",
+    "actor-model",    
     "akka",
     "akka.net",
-    "non-blocking"
+    "non-blocking",
+    "actor system",
+    "erlang"       
   ],
   "author": "Nick Cuthbert (https://github.com/ncthbrt)",
   "license": "Apache-2.0",
@@ -28,7 +32,7 @@
     "url": "http://github.com/ncthbrt/nact-persistence-postgres/issues"
   },
   "dependencies": {
-    "nact": "~3.1.0",
+    "nact": "^3.1.4",
     "pg-reactive": "^0.3.2",
     "rxjs": "^5.4.3"
   },

@@ -7,7 +7,7 @@ chai.should();
 const { Promise } = require('bluebird');
 const delay = Promise.delay;
 const { PostgresPersistenceEngine } = require('../lib');
-const { PersistedEvent } = require('nact/lib/extensions/persistence');
+const { PersistedEvent } = require('nact/lib/persistence');
 const pgp = require('pg-promise')();
 const { destroy } = require('../lib/schema');
 
