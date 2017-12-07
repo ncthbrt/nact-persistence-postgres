@@ -4,6 +4,7 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 chai.should();
+const expect = chai.expect;
 const { Promise } = require('bluebird');
 const delay = Promise.delay;
 const { PostgresPersistenceEngine } = require('../lib');
@@ -116,6 +117,11 @@ describe('PostgresPersistenceEngine', function () {
     it('should be able to retrieve latest snapshot', async function () {
       const result = await engine.latestSnapshot('test3');
       result.should.deep.equal(snapshot3);
+    });
+
+    it('should be able to correct handle cases where no snapshot is available', async function () {
+      const result = await engine.latestSnapshot('test4');
+      expect(result).to.equal(undefined);
     });
   });
 
