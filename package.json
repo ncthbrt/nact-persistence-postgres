@@ -1,6 +1,6 @@
 {
   "name": "nact-persistence-postgres",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "nact-persistence-postgres ⇒ nact + postresql = your services have never been so persistent",
   "main": "lib/index.js",
   "scripts": {
@@ -32,7 +32,6 @@
     "url": "http://github.com/ncthbrt/nact-persistence-postgres/issues"
   },
   "dependencies": {
-    "nact": "^4.0.0",
     "pg-promise": "^7.3.2",
     "rxjs": "^5.4.3"
   },
@@ -45,5 +44,8 @@
     "mocha": "^4.0.0",
     "nyc": "^11.2.1",
     "semistandard": "^11.0.0"
+  },
+  "peerDependencies": {
+    "nact": "^4.3.0"
   }
 }

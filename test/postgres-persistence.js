@@ -5,8 +5,9 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 chai.should();
 const expect = chai.expect;
-const { Promise } = require('bluebird');
-const delay = Promise.delay;
+const delay = (time) => new Promise((resolve, reject) => {
+  setTimeout(() => resolve(), time);
+});
 const { PostgresPersistenceEngine } = require('../lib');
 const { PersistedEvent, PersistedSnapshot } = require('nact/lib/persistence');
 const pgp = require('pg-promise')();
