@@ -54,7 +54,7 @@ describe('PostgresPersistenceEngine', function () {
       const engine = new PostgresPersistenceEngine(connectionString);
       await retry(async () => {
         const event1 = new PersistedEvent({ message: 'hello' }, 1, 'test', ['a', 'b', 'c']);
-        const event2 = new PersistedEvent({ message: 'goodbye' }, 2, 'test');
+        const event2 = new PersistedEvent([ 'message', 'goodbye' ], 2, 'test');
         const event3 = new PersistedEvent({ message: 'hello' }, 1, 'test2');
         await engine.persist(event1);
         await engine.persist(event2);
