@@ -54,7 +54,7 @@ describe('PostgresPersistenceEngine', function () {
       const engine = new PostgresPersistenceEngine(connectionString);
       await retry(async () => {
         const event1 = new PersistedEvent({ message: 'hello' }, 1, 'test', ['a', 'b', 'c']);
-        const event2 = new PersistedEvent([ 'message', 'goodbye' ], 2, 'test');
+        const event2 = new PersistedEvent(['message', 'goodbye'], 2, 'test');
         const event3 = new PersistedEvent({ message: 'hello' }, 1, 'test2');
         await engine.persist(event1);
         await engine.persist(event2);
@@ -145,32 +145,17 @@ describe('PostgresPersistenceEngine', function () {
     });
 
     it('should be able to retrieve previously persisted events', async function () {
-      const result = await new Promise((resolve, reject) => {
-        engine.events('test3')
-                .reduce((prev, evt) => [...prev, evt], [])
-                .catch(e => { reject(e); return e; })
-                .subscribe(resolve);
-      });
+      const result = await engine.events('test3').reduce((prev, evt) => [...prev, evt], []);
       result.should.deep.equal([event1, event2, event3]);
     });
 
     it('should be able to specify an offset of previously persisted events', async function () {
-      const result = await new Promise((resolve, reject) => {
-        engine.events('test3', 1)
-                .reduce((prev, evt) => [...prev, evt], [])
-                .catch(e => { reject(e); return e; })
-                .subscribe(resolve);
-      });
+      const result = await engine.events('test3', 1).reduce((prev, evt) => [...prev, evt], []);
       result.should.deep.equal([event2, event3]);
     });
 
     it('should be able to filter by tag', async function () {
-      const result = await new Promise((resolve, reject) => {
-        engine.events('test3', undefined, undefined, ['b', 'c'])
-                .reduce((prev, evt) => [...prev, evt], [])
-                .catch(e => { reject(e); return e; })
-                .subscribe(resolve);
-      });
+      const result = await engine.events('test3', undefined, undefined, ['b', 'c']);
       result.should.deep.equal([event1, event3]);
     });
   });
