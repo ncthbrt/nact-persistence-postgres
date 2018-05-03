@@ -1,12 +1,13 @@
 {
   "name": "nact-persistence-postgres",
-  "version": "6.0.1",
+  "version": "6.0.2",
   "description": "nact-persistence-postgres ⇒ nact + postresql = your services have never been so persistent",
   "main": "lib/index.js",
   "scripts": {
     "test": "yarn run lint && nyc mocha ./test/*.js",
     "interactive-cover": "nyc --reporter=html mocha ./test/*.js && open ./coverage/index.html",
     "lint": "semistandard",
+    "lint-fix": "semistandard --fix",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prepush": "yarn run test"
   },

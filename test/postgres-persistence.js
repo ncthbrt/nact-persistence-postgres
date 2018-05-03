@@ -31,69 +31,69 @@ const connectionString = 'postgres://postgres:testpassword@localhost:5431/testdb
 describe('PostgresPersistenceEngine', function () {
   const db = pgp(connectionString);
 
-  afterEach(() => {
-    db.query(destroy());
-  });
+  describe('table creation', () => {
+    afterEach(async () => {
+      await db.query(destroy(''));
+    });
 
-  it('should not create database if createIfNotExists is set to false', async function () {
-    new PostgresPersistenceEngine(connectionString, { createIfNotExists: false });
-    await delay(300);
-    const query = `
+    it('should not create database if createIfNotExists is set to false', async function () {
+      new PostgresPersistenceEngine(connectionString, { createIfNotExists: false });
+      await delay(300);
+      const query = `
       SELECT table_schema,table_name
       FROM information_schema.tables
       WHERE table_name = 'event_journal';`;
-    await db.none(query);
-  });
+      await db.none(query);
+    });
 
-  it('should not be able to create databases with prefixes', async function () {
-    new PostgresPersistenceEngine(connectionString, { tablePrefix: 'test_prefix_' });
-    await delay(300);
-    const query = `
+    it('should not be able to create databases with prefixes', async function () {
+      new PostgresPersistenceEngine(connectionString, { tablePrefix: 'test_prefix_' });
+      await delay(300);
+      const query = `
       SELECT table_schema,table_name
       FROM information_schema.tables
       WHERE table_name = 'test_prefix_event_journal';`;
-
-    await db.one(query);
-    await db.query(destroy('test_prefix_'));
+      await db.one(query);
+      await db.query(destroy('test_prefix_'));
+    });
   });
 
   describe('#persist', function () {
-    afterEach(() => {
-      db.query(destroy());
+    afterEach(async () => {
+      await db.query(destroy(''));
     });
-
+    const date = new Date().getTime();
     it('should store values in database', async function () {
       const engine = new PostgresPersistenceEngine(connectionString);
-      await retry(async () => {
-        const event1 = new PersistedEvent({ message: 'hello' }, 1, 'test', ['a', 'b', 'c']);
-        const event2 = new PersistedEvent(['message', 'goodbye'], 2, 'test');
-        const event3 = new PersistedEvent({ message: 'hello' }, 1, 'test2');
-        await engine.persist(event1);
-        await engine.persist(event2);
-        await engine.persist(event3);
 
-        const result =
+      const event1 = new PersistedEvent({ message: 'hello' }, 1, 'test', ['a', 'b', 'c'], date);
+      const event2 = new PersistedEvent(['message', 'goodbye'], 2, 'test', undefined, date);
+      const event3 = new PersistedEvent({ message: 'hello' }, 1, 'test2', undefined, date);
+      await engine.persist(event1);
+      await engine.persist(event2);
+      await engine.persist(event3);
+
+      const result =
           (await db.many('SELECT * FROM event_journal WHERE persistence_key = \'test\' ORDER BY sequence_nr'))
             .map(PostgresPersistenceEngine.mapDbModelToDomainModel);
 
-        result.should.be.lengthOf(2).and.deep.equal([event1, event2]);
-        const result2 = await db.one('SELECT * FROM event_journal WHERE persistence_key = \'test2\'');
-        PostgresPersistenceEngine.mapDbModelToDomainModel(result2).should.deep.equal(event3);
-      }, 7, 50);
+      result.should.be.lengthOf(2).and.deep.equal([event1, event2]);
+      const result2 = await db.one('SELECT * FROM event_journal WHERE persistence_key = \'test2\'');
+      PostgresPersistenceEngine.mapDbModelToDomainModel(result2).should.deep.equal(event3);
     });
   });
 
   describe('#takeSnapshot', function () {
-    afterEach(() => {
-      db.query(destroy());
+    afterEach(async () => {
+      await db.query(destroy(''));
     });
-
+    const date = new Date().getTime();
     it('should store values in database', async function () {
       const engine = new PostgresPersistenceEngine(connectionString);
       await retry(async () => {
-        const snapshot1 = new PersistedSnapshot({ message: 'hello' }, 1, 'test');
-        const snapshot2 = new PersistedSnapshot({ message: 'goodbye' }, 2, 'test');
-        const snapshot3 = new PersistedSnapshot({ message: 'hello' }, 1, 'test2');
+        const snapshot1 = new PersistedSnapshot({ message: 'hello' }, 1, 'test', date);
+        const snapshot2 = new PersistedSnapshot({ message: 'goodbye' }, 2, 'test', date);
+        const snapshot3 = new PersistedSnapshot({ message: 'hello' }, 1, 'test2', date);
         await engine.takeSnapshot(snapshot1);
         await engine.takeSnapshot(snapshot2);
         await engine.takeSnapshot(snapshot3);
@@ -110,21 +110,20 @@ describe('PostgresPersistenceEngine', function () {
   });
 
   describe('#latestSnapshot', function () {
-    const snapshot1 = new PersistedSnapshot({ message: 'hello' }, 1, 'test3');
-    const snapshot2 = new PersistedSnapshot({ message: 'goodbye' }, 2, 'test3');
-    const snapshot3 = new PersistedSnapshot({ message: 'hello again' }, 3, 'test3');
+    const date = new Date().getTime();
+    const snapshot1 = new PersistedSnapshot({ message: 'hello' }, 1, 'test3', date);
+    const snapshot2 = new PersistedSnapshot({ message: 'goodbye' }, 2, 'test3', date);
+    const snapshot3 = new PersistedSnapshot({ message: 'hello again' }, 3, 'test3', date);
     let engine;
 
     beforeEach(async () => {
       engine = new PostgresPersistenceEngine(connectionString);
-      await retry(async () => {
-        await engine.takeSnapshot(snapshot1);
-        await engine.takeSnapshot(snapshot2);
-        await engine.takeSnapshot(snapshot3);
-      }, 7, 50);
+      await engine.takeSnapshot(snapshot1);
+      await engine.takeSnapshot(snapshot2);
+      await engine.takeSnapshot(snapshot3);
     });
-    afterEach(() => {
-      db.query(destroy());
+    afterEach(async () => {
+      await db.query(destroy(''));
     });
 
     it('should be able to retrieve latest snapshot', async function () {
@@ -139,21 +138,20 @@ describe('PostgresPersistenceEngine', function () {
   });
 
   describe('#events', async function () {
-    const event1 = new PersistedEvent({ message: 'hello' }, 1, 'test3', ['a', 'b', 'c']);
-    const event2 = new PersistedEvent({ message: 'goodbye' }, 2, 'test3', ['a']);
-    const event3 = new PersistedEvent({ message: 'hello again' }, 3, 'test3', ['b', 'c']);
+    const date = new Date().getTime();
+    const event1 = new PersistedEvent({ message: 'hello' }, 1, 'test3', ['a', 'b', 'c'], date);
+    const event2 = new PersistedEvent({ message: 'goodbye' }, 2, 'test3', ['a'], date);
+    const event3 = new PersistedEvent({ message: 'hello again' }, 3, 'test3', ['b', 'c'], date);
     let engine;
 
     beforeEach(async () => {
       engine = new PostgresPersistenceEngine(connectionString);
-      await retry(async () => {
-        await engine.persist(event1);
-        await engine.persist(event2);
-        await engine.persist(event3);
-      }, 7, 50);
+      await engine.persist(event1);
+      await engine.persist(event2);
+      await engine.persist(event3);
     });
-    afterEach(() => {
-      db.query(destroy());
+    afterEach(async () => {
+      await db.query(destroy(''));
     });
 
     it('should be able to retrieve previously persisted events', async function () {
