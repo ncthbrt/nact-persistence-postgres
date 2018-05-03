@@ -45,6 +45,18 @@ describe('PostgresPersistenceEngine', function () {
     await db.none(query);
   });
 
+  it('should not be able to create databases with prefixes', async function () {
+    new PostgresPersistenceEngine(connectionString, { tablePrefix: 'test_prefix_' });
+    await delay(300);
+    const query = `
+      SELECT table_schema,table_name
+      FROM information_schema.tables
+      WHERE table_name = 'test_prefix_event_journal';`;
+
+    await db.one(query);
+    await db.query(destroy('test_prefix_'));
+  });
+
   describe('#persist', function () {
     afterEach(() => {
       db.query(destroy());
