@@ -551,9 +551,9 @@ delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
 
-denque@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/denque/-/denque-1.2.2.tgz#e06cf7cf0da8badc88cbdaabf8fc0a70d659f1d4"
+denque@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/denque/-/denque-1.2.3.tgz#98c50c8dd8cdfae318cc5859cc8ee3da0f9b0cc2"
 
 detect-indent@^4.0.0:
   version "4.0.0"
@@ -1667,11 +1667,11 @@ mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
-nact@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/nact/-/nact-6.0.0.tgz#e71f8da8fc11bef87fcd37a47d4ad1f5d34add83"
+nact@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/nact/-/nact-7.0.1.tgz#58d87b3415b63ec72f2e33e1ba4d1fb53640a6a6"
   dependencies:
-    denque "^1.2.2"
+    denque "^1.2.3"
 
 natural-compare@^1.4.0:
   version "1.4.0"
