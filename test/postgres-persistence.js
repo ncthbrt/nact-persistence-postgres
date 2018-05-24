@@ -107,6 +107,25 @@ describe('PostgresPersistenceEngine', function () {
         PostgresPersistenceEngine.mapDbModelToSnapshotDomainModel(result2).should.deep.equal(snapshot3);
       }, 7, 50);
     });
+    it('should store arrays in database', async function () {
+      const engine = new PostgresPersistenceEngine(connectionString);
+      await retry(async () => {
+        const snapshot1 = new PersistedSnapshot([ 'hello' ], 1, 'test3', date);
+        const snapshot2 = new PersistedSnapshot(['goodbye'], 2, 'test3', date);
+        const snapshot3 = new PersistedSnapshot([ 'hello' ], 1, 'test4', date);
+        await engine.takeSnapshot(snapshot1);
+        await engine.takeSnapshot(snapshot2);
+        await engine.takeSnapshot(snapshot3);
+
+        const result =
+          (await db.many('SELECT * FROM snapshot_store WHERE persistence_key = \'test3\' ORDER BY sequence_nr'))
+            .map(PostgresPersistenceEngine.mapDbModelToSnapshotDomainModel);
+
+        result.should.be.lengthOf(2).and.deep.equal([snapshot1, snapshot2]);
+        const result2 = await db.one('SELECT * FROM snapshot_store WHERE persistence_key = \'test4\'');
+        PostgresPersistenceEngine.mapDbModelToSnapshotDomainModel(result2).should.deep.equal(snapshot3);
+      }, 7, 50);
+    });
   });
 
   describe('#latestSnapshot', function () {
