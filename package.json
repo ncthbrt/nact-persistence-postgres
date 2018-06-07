@@ -1,6 +1,6 @@
 {
   "name": "nact-persistence-postgres",
-  "version": "7.2.1",
+  "version": "7.2.2",
   "description": "nact-persistence-postgres ⇒ nact + postresql = your services have never been so persistent",
   "main": "lib/index.js",
   "scripts": {
