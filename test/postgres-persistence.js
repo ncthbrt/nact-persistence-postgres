@@ -31,6 +31,33 @@ const connectionString = 'postgres://postgres:testpassword@localhost:5431/testdb
 describe('PostgresPersistenceEngine', function () {
   const db = pgp(connectionString);
 
+  describe('existing connection', () => {
+    afterEach(async () => {
+      await db.query(destroy(''));
+    });
+
+    it('should store values in database', async function () {
+      const date = new Date().getTime();
+      const engine = new PostgresPersistenceEngine(db);
+      await retry(async () => {
+        const snapshot1 = new PersistedSnapshot({ message: 'hello' }, 1, 'test', date);
+        const snapshot2 = new PersistedSnapshot({ message: 'goodbye' }, 2, 'test', date);
+        const snapshot3 = new PersistedSnapshot({ message: 'hello' }, 1, 'test2', date);
+        await engine.takeSnapshot(snapshot1);
+        await engine.takeSnapshot(snapshot2);
+        await engine.takeSnapshot(snapshot3);
+
+        const result =
+          (await db.many('SELECT * FROM snapshot_store WHERE persistence_key = \'test\' ORDER BY sequence_nr'))
+            .map(PostgresPersistenceEngine.mapDbModelToSnapshotDomainModel);
+
+        result.should.be.lengthOf(2).and.deep.equal([snapshot1, snapshot2]);
+        const result2 = await db.one('SELECT * FROM snapshot_store WHERE persistence_key = \'test2\'');
+        PostgresPersistenceEngine.mapDbModelToSnapshotDomainModel(result2).should.deep.equal(snapshot3);
+      }, 7, 50);
+    });
+  });
+
   describe('table creation', () => {
     afterEach(async () => {
       await db.query(destroy(''));
