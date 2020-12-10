@@ -58,30 +58,70 @@ describe('PostgresPersistenceEngine', function () {
     });
   });
 
-  describe('table creation', () => {
-    afterEach(async () => {
-      await db.query(destroy(''));
+  describe('#tables', function () {
+    describe('table creation backwards compatibility', () => {
+      afterEach(async () => {
+        await db.query(destroy(''));
+      });
+
+      it('should not create database if createIfNotExists is set to false', async function () {
+        new PostgresPersistenceEngine(connectionString, {createIfNotExists: false});
+        await delay(300);
+        const query = `
+          SELECT table_schema,table_name
+          FROM information_schema.tables
+          WHERE table_name = 'event_journal';`;
+        await db.none(query);
+      });
+
+      it('should not be able to create databases with prefixes', async function () {
+        new PostgresPersistenceEngine(connectionString, {tablePrefix: 'test_prefix_'});
+        await delay(300);
+        const query = `
+          SELECT table_schema,table_name
+          FROM information_schema.tables
+          WHERE table_name = 'test_prefix_event_journal';`;
+        await db.one(query);
+        await db.query(destroy('test_prefix_'));
+      });
     });
 
-    it('should not create database if createIfNotExists is set to false', async function () {
-      new PostgresPersistenceEngine(connectionString, { createIfNotExists: false });
-      await delay(300);
-      const query = `
-      SELECT table_schema,table_name
-      FROM information_schema.tables
-      WHERE table_name = 'event_journal';`;
-      await db.none(query);
-    });
+    describe('table creation with prefixes, table names, and schemas', () => {
+      afterEach(async () => {
+        await db.query(destroy('test_schema_', 'test', 'event_log', 'snapshot_log'));
+      });
 
-    it('should not be able to create databases with prefixes', async function () {
-      new PostgresPersistenceEngine(connectionString, { tablePrefix: 'test_prefix_' });
-      await delay(300);
-      const query = `
-      SELECT table_schema,table_name
-      FROM information_schema.tables
-      WHERE table_name = 'test_prefix_event_journal';`;
-      await db.one(query);
-      await db.query(destroy('test_prefix_'));
+      it('should not create database if createIfNotExists is set to false', async function () {
+        new PostgresPersistenceEngine(connectionString, {createIfNotExists: false, tablePrefix: 'test_schema_', schema: 'test'});
+        await delay(300);
+        const query = `
+          SELECT table_schema,table_name
+          FROM information_schema.tables
+          WHERE table_name = 'test_schema_event_log' AND table_schema = 'test';`;
+        await db.none(query);
+      });
+
+      it('should not be able to create databases with prefixes and schema', async function () {
+        new PostgresPersistenceEngine(connectionString, {tablePrefix: 'test_schema_', schema: 'test', eventTable: 'event_log', snapshotTable: 'snapshot_log'});
+        await delay(300);
+        const query = `
+          SELECT table_schema,table_name
+          FROM information_schema.tables
+          WHERE table_name = 'test_schema_event_log' AND table_schema = 'test';`;
+        await db.one(query);
+        await db.query(destroy('test_schema_', 'test', 'event_log', 'snapshot_log'));
+      });
+
+      it('should be able to create databases with prefixes and schema', async function () {
+        new PostgresPersistenceEngine(connectionString, {createIfNotExists: true, tablePrefix: 'test_schema_', schema: 'test', eventTable: 'event_log', snapshotTable: 'snapshot_log'});
+        await delay(300);
+        const query = `
+          SELECT table_schema,table_name
+          FROM information_schema.tables
+          WHERE table_name = 'test_schema_event_log' AND table_schema = 'test';`;
+        await db.one(query);
+        await db.query(destroy('test_schema_', 'test', 'event_log', 'snapshot_log'));
+      });
     });
   });
 
