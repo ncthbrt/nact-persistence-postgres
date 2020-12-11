@@ -27,5 +27,5 @@ jobs:
       - name: Setup nact database
         run: ./scripts/setup-db.sh
       # Runs a set of commands using the runners shell
-      - name: Run Tests and Coverage
-        run: yarn run coverage
+      - name: Run Tests
+        run: yarn run test
