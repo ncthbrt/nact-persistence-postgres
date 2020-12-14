@@ -33,7 +33,7 @@
     "url": "http://github.com/ncthbrt/nact-persistence-postgres/issues"
   },
   "dependencies": {
-    "pg-promise": "^10.6.1"
+    "pg-promise": "^10.6.5"
   },
   "devDependencies": {
     "chai": "^4.1.1",
