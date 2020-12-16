@@ -9,8 +9,7 @@ A postgres persistence plugin for NAct that allows for encrypting fields on a pe
 When persisting an event, pass an `annotations` parameter with at least the key `encrypt` to aes-256 encrypt the value of the property.
 
 ```
-persist(msg, {
-  annotations: {
+persist(msg, tags, {
     "encrypt": {
       "my_obj_prop": "jsonb",
       "my_nested_obj_prop.my_obj_prop": "jsonb",
@@ -19,7 +18,6 @@ persist(msg, {
       "my_int_prop": "int",
       "my_float_prop": "double"
     }
-  }
 })
 ```
 
@@ -38,21 +36,19 @@ Then, if the need to ever scramble the encryption key (Effectively "Forget" a va
 Additionally, this plugin adds a `metadata` column, so that environment specific variables for an event/snapshot can be stored and retrieved.
 
 ```
-persist(msg, {
-  metadata: {
+persist(msg, [], {}, {
     "ip": "127.0.0.1"
-  }
 })
 ```
 
 
 <!-- Badges -->
-[![Travis branch](https://img.shields.io/travis/ncthbrt/nact-persistence-postgres.svg?style=flat-square)](https://travis-ci.org/ncthbrt/nact-persistence-postgres)
-[![Coveralls](https://img.shields.io/coveralls/ncthbrt/nact-persistence-postgres.svg?style=flat-square)](https://coveralls.io/github/ncthbrt/nact-persistence-postgres) [![Dependencies](https://david-dm.org/ncthbrt/nact-persistence-postgres.svg?branch=master&style=flat-square)](https://david-dm.org/ncthbrt/nact-persistence-postgres) 
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fncthbrt%2Fnact-persistence-postgres.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fncthbrt%2Fnact-persistence-postgres?ref=badge_shield)
+[![Travis branch](https://img.shields.io/travis/scott-wyatt/nact-persistence-postgres-encrypted.svg?style=flat-square)](https://travis-ci.org/scott-wyatt/nact-persistence-postgres-encrypted)
+[![Coveralls](https://img.shields.io/coveralls/scott-wyatt/nact-persistence-postgres-encrypted.svg?style=flat-square)](https://coveralls.io/github/scott-wyatt/nact-persistence-postgres-encrypted) [![Dependencies](https://david-dm.org/scott-wyatt/nact-persistence-postgres-encrypted.svg?branch=master&style=flat-square)](https://david-dm.org/scott-wyatt/nact-persistence-postgres-encrypted) 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fscott-wyatt%2Fnact-persistence-postgres-encrypted.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2scott-wyatt%2Fnact-persistence-postgres-encrypted?ref=badge_shield)
 
-[![npm](https://img.shields.io/npm/v/nact-persistence-postgres.svg?style=flat-square)](https://www.npmjs.com/package/nact-persistence-postgres) [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-blue.svg?style=flat-square)](https://github.com/Flet/semistandard) 
+[![npm](https://img.shields.io/npm/v/nact-persistence-postgres-encrypted.svg?style=flat-square)](https://www.npmjs.com/package/nact-persistence-postgres-encrypted) [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-blue.svg?style=flat-square)](https://github.com/Flet/semistandard) 
 
 
 ## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fncthbrt%2Fnact-persistence-postgres.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fncthbrt%2Fnact-persistence-postgres?ref=badge_large)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fscott-wyatt%2Fnact-persistence-postgres-encrypted.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fscott-wyatt%2Fnact-persistence-postgres-encrypted?ref=badge_large)

@@ -1,7 +1,7 @@
 {
-  "name": "nact-persistence-postgres",
-  "version": "8.0.1",
-  "description": "nact-persistence-postgres ⇒ nact + postresql = your services have never been so persistent",
+  "name": "nact-persistence-postgres-encrpyted",
+  "version": "1.0.0",
+  "description": "nact-persistence-postgres-encrypted ⇒ nact + postresql + encryption = your services have never been so persistent and secure",
   "main": "lib/index.js",
   "scripts": {
     "test": "yarn run lint && nyc mocha ./test/*.js",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ncthbrt/nact-persistence-postgres"
+    "url": "git://github.com/scott-wyatt/nact-persistence-postgres-encrypted"
   },
   "keywords": [
     "PostgreSQL",
@@ -25,15 +25,23 @@
     "akka.net",
     "non-blocking",
     "actor system",
-    "erlang"
+    "erlang",
+    "encryption"
   ],
   "author": "Nick Cuthbert (https://github.com/ncthbrt)",
+  "contributors": [
+    {
+      "name" : "Scott Wyatt",
+      "url" : "https://github.com/scott-wyatt"
+    }
+  ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "http://github.com/ncthbrt/nact-persistence-postgres/issues"
+    "url": "http://github.com/scott-wyatt/nact-persistence-postgres-encrypted/issues"
   },
   "dependencies": {
-    "pg-promise": "^10.6.5"
+    "pg-promise": "^10.6.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "chai": "^4.1.1",
